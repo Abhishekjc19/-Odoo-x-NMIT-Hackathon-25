@@ -45,10 +45,10 @@ function PromotionalBanner() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute bottom-0 left-0 p-8 text-white">
-                        <h2 className="text-3xl md:text-4xl font-headline font-bold mb-2">Pass It On-am!</h2>
-                        <p className="text-lg mb-4 max-w-xl">Celebrate sustainability this festive season. Find unique pre-loved treasures.</p>
+                        <h2 className="text-3xl md:text-4xl font-headline font-bold mb-2">THRIFT THIS ONAM</h2>
+                        <p className="text-lg mb-4 max-w-xl">Festive fits. Preloved prices. Style the season the Rewago way.</p>
                         <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                            <Link href="/collections/pass-it-onam">Shop the Collection</Link>
+                            <Link href="/collections/pass-it-onam">Shop The Collection</Link>
                         </Button>
                     </div>
                 </div>
