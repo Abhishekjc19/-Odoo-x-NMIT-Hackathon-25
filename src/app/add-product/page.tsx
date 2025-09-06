@@ -32,7 +32,6 @@ export default function AddProductPage() {
   const router = useRouter();
   const { toast } = useToast();
   const { isLoggedIn, user, isLoading } = useAuth();
-  const [imageUrl, setImageUrl] = useState<string>('');
   const [enhancedImageUrl, setEnhancedImageUrl] = useState<string>('');
   const [isEnhancing, setIsEnhancing] = useState(false);
 
@@ -54,20 +53,12 @@ export default function AddProductPage() {
     }
   }, [isLoggedIn, isLoading, router]);
 
-  useEffect(() => {
-    if (form.formState.errors.imageUrl) {
-        setImageUrl('');
-    } else {
-        setImageUrl(watchedImageUrl);
-    }
-    setEnhancedImageUrl('');
-  }, [watchedImageUrl, form.formState.errors.imageUrl]);
 
   async function handleEnhanceImage() {
-    if (!imageUrl) return;
+    if (!watchedImageUrl) return;
     setIsEnhancing(true);
     setEnhancedImageUrl('');
-    const result = await enhanceImageAction(imageUrl);
+    const result = await enhanceImageAction(watchedImageUrl);
     setIsEnhancing(false);
     if (result.enhancedPhotoDataUri) {
         setEnhancedImageUrl(result.enhancedPhotoDataUri);
@@ -156,11 +147,11 @@ export default function AddProductPage() {
                             </FormItem>
                         )} />
                         <div className="grid grid-cols-2 gap-4 h-48">
-                            {imageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={imageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
+                            {watchedImageUrl && !form.formState.errors.imageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
                             {enhancedImageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={enhancedImageUrl} alt="Enhanced Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
                             {isEnhancing && <div className="bg-muted rounded-md p-2 flex items-center justify-center animate-pulse">Enhancing...</div>}
                         </div>
-                        <Button type="button" variant="outline" onClick={handleEnhanceImage} disabled={!imageUrl || isEnhancing}>
+                        <Button type="button" variant="outline" onClick={handleEnhanceImage} disabled={!watchedImageUrl || isEnhancing || !!form.formState.errors.imageUrl}>
                             <Sparkles className="mr-2 h-4 w-4" /> {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
                         </Button>
                     </div>
