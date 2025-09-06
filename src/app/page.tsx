@@ -68,10 +68,7 @@ function HomePageContent() {
 
 function PageSkeleton() {
     return (
-        <div className="space-y-12">
-            <div className="text-center mb-12 mt-12">
-                <Skeleton className="h-8 w-64 mx-auto mb-2" />
-            </div>
+        <div className="space-y-12 mt-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
                 {Array.from({ length: 8 }).map((_, i) => (
                     <div key={i} className="space-y-3">
@@ -82,20 +79,6 @@ function PageSkeleton() {
                         </div>
                     </div>
                 ))}
-            </div>
-             <div className="mt-16">
-                <Skeleton className="h-8 w-72 mx-auto mb-6" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="space-y-3">
-                    <Skeleton className="h-[200px] w-full rounded-xl" />
-                    <div className="space-y-2">
-                        <Skeleton className="h-4 w-4/5" />
-                        <Skeleton className="h-4 w-2/5" />
-                    </div>
-                    </div>
-                ))}
-                </div>
             </div>
         </div>
     )
@@ -119,9 +102,10 @@ export default function Home() {
               <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">Join the movement. Buy, sell, and swap pre-loved goods with a like-minded community.</p>
           </div>
       </section>
-
+      
+      <SearchBarSection />
+      
       <Suspense fallback={<PageSkeleton />}>
-        <SearchBarSection />
         <HomePageContent />
       </Suspense>
       
