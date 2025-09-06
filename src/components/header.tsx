@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useAuth } from '@/hooks/use-auth';
-import { Menu, Search, ShoppingCart, User, LogOut } from 'lucide-react';
+import { Menu, Search, ShoppingCart, LogOut } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { cn } from '@/lib/utils';
 
@@ -49,7 +49,7 @@ function SearchBar() {
             <Input
                 type="search"
                 placeholder="Search for items..."
-                className="pr-10"
+                className="pr-10 bg-black/20 focus:bg-black/30 border-0"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
@@ -78,7 +78,7 @@ export function Header() {
           <Button asChild variant="ghost">
             <Link href="/login">Login</Link>
           </Button>
-          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/signup">Sign Up</Link>
           </Button>
         </>
@@ -87,7 +87,7 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/50 backdrop-blur-lg">
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Logo />
@@ -136,7 +136,7 @@ export function Header() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background/80 backdrop-blur-xl">
               <div className="flex flex-col h-full">
                 <div className="p-4">
                   <Logo />
@@ -158,7 +158,7 @@ export function Header() {
                         <Button variant="outline" className="w-full">Login</Button>
                       </Link>
                       <Link href="/signup" onClick={() => setSheetOpen(false)}>
-                        <Button className="w-full bg-primary text-primary-foreground">Sign Up</Button>
+                        <Button className="w-full bg-accent text-accent-foreground">Sign Up</Button>
                       </Link>
                     </>
                   )}
