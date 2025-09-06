@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { ProductFilters } from '@/components/product-filters';
@@ -112,19 +113,39 @@ export default function Home() {
           <Suspense fallback={<div>Loading recommendations...</div>}>
             <RecommendedProducts />
           </Suspense>
-
-          <Link href="/add-product" passHref>
-            <Button
-              className="fixed bottom-24 right-4 h-16 w-16 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground"
-              size="icon"
-              aria-label="Add new product"
-            >
-              <Plus className="h-8 w-8" />
-            </Button>
-          </Link>
       </div>
+
+      <section id="about" className="py-16 bg-secondary/50 mt-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-headline font-bold mb-4">About EcoSwap</h2>
+            <p className="max-w-3xl mx-auto text-muted-foreground">
+                EcoSwap is a community-driven marketplace dedicated to promoting sustainability through the buying, selling, and swapping of pre-loved goods. Our mission is to reduce waste, extend the life of products, and build a community that values conscious consumption. Join us in making a positive impact, one swap at a time.
+            </p>
+        </div>
+      </section>
+
+      <section id="contact" className="py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <h2 className="text-3xl font-headline font-bold mb-4">Get In Touch</h2>
+              <p className="max-w-xl mx-auto text-muted-foreground mb-8">
+                  Have questions, feedback, or just want to say hello? We'd love to hear from you.
+              </p>
+              <Button size="lg" asChild>
+                  <a href="mailto:support@ecoswap.com">Contact Us</a>
+              </Button>
+          </div>
+      </section>
+
+
+      <Link href="/add-product" passHref>
+        <Button
+          className="fixed bottom-24 right-4 h-16 w-16 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground"
+          size="icon"
+          aria-label="Add new product"
+        >
+          <Plus className="h-8 w-8" />
+        </Button>
+      </Link>
     </>
   );
 }
-
-
