@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
@@ -37,6 +38,7 @@ export default function AddProductPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "onTouched",
     defaultValues: {
       title: "",
       description: "",
@@ -121,6 +123,7 @@ export default function AddProductPage() {
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger><SelectValue placeholder="Select a category" /></SelectTrigger>
+
                                     </FormControl>
                                     <SelectContent>
                                         {categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
@@ -147,7 +150,7 @@ export default function AddProductPage() {
                             </FormItem>
                         )} />
                         <div className="grid grid-cols-2 gap-4 h-48">
-                            {watchedImageUrl && !form.formState.errors.imageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
+                            {watchedImageUrl && !form.formState.errors.imageUrl ? <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div> : <div />}
                             {enhancedImageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={enhancedImageUrl} alt="Enhanced Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
                             {isEnhancing && <div className="bg-muted rounded-md p-2 flex items-center justify-center animate-pulse">Enhancing...</div>}
                         </div>
