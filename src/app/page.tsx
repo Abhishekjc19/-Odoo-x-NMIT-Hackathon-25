@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { ProductFilters } from '@/components/product-filters';
@@ -33,7 +34,7 @@ function SearchBarSection() {
 
 function ProductList() {
   const { isLoggedIn, user } = useAuth();
-  const searchParams = useSearchParams(); // This hook causes the issue
+  const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search') || undefined;
   const categoryQuery = (searchParams.get('category') || 'All') as Product['category'] | 'All';
   
@@ -149,5 +150,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
