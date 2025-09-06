@@ -26,7 +26,9 @@ const formSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters."),
   category: z.enum(categories),
   price: z.coerce.number().min(0.01, "Price must be positive."),
-  imageUrl: z.string().url("Must be a valid URL."),
+  imageUrl: z.string().url("Must be a valid URL.").refine(val => val.startsWith('http'), {
+      message: "URL must start with http or https"
+  }),
 });
 
 export default function AddProductPage() {
@@ -48,6 +50,8 @@ export default function AddProductPage() {
   });
 
   const watchedImageUrl = form.watch("imageUrl");
+  const isImageUrlValid = form.formState.isValid && !form.formState.errors.imageUrl;
+
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -150,11 +154,11 @@ export default function AddProductPage() {
                             </FormItem>
                         )} />
                         <div className="grid grid-cols-2 gap-4 h-48">
-                            {watchedImageUrl && !form.formState.errors.imageUrl ? <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div> : <div />}
+                            {isImageUrlValid ? <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div> : <div />}
                             {enhancedImageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={enhancedImageUrl} alt="Enhanced Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
                             {isEnhancing && <div className="bg-muted rounded-md p-2 flex items-center justify-center animate-pulse">Enhancing...</div>}
                         </div>
-                        <Button type="button" variant="outline" onClick={handleEnhanceImage} disabled={!watchedImageUrl || isEnhancing || !!form.formState.errors.imageUrl}>
+                        <Button type="button" variant="outline" onClick={handleEnhanceImage} disabled={!isImageUrlValid || isEnhancing}>
                             <Sparkles className="mr-2 h-4 w-4" /> {isEnhancing ? 'Enhancing...' : 'Enhance with AI'}
                         </Button>
                     </div>
