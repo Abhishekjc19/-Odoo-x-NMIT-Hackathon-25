@@ -31,9 +31,9 @@ function SearchBarSection() {
     );
 }
 
-function HomePageContent() {
+function ProductList() {
   const { isLoggedIn, user } = useAuth();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // This hook causes the issue
   const searchQuery = searchParams.get('search') || undefined;
   const categoryQuery = (searchParams.get('category') || 'All') as Product['category'] | 'All';
   
@@ -90,6 +90,7 @@ function PageSkeleton() {
 export default function Home() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* This content is static and doesn't use the problematic hook */}
       <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white -mx-4 sm:-mx-6 lg:-mx-8">
           <Image 
             src="https://picsum.photos/seed/hero/1600/800" 
@@ -108,8 +109,9 @@ export default function Home() {
       
       <SearchBarSection />
       
+      {/* This is the crucial part. We wrap the dynamic content in Suspense. */}
       <Suspense fallback={<PageSkeleton />}>
-        <HomePageContent />
+        <ProductList />
       </Suspense>
       
 
@@ -147,3 +149,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
