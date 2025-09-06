@@ -39,7 +39,7 @@ export default function LoginPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Mock login logic
-    if (values.email === "test@example.com" && values.password === "password") {
+    if (values.email === "test@example.com") {
       login({ displayName: "Test User", email: values.email });
       toast({
         title: "Login Successful",
