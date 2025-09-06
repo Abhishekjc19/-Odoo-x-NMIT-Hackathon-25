@@ -35,13 +35,12 @@ function PromotionalBanner() {
     return (
         <section className="mb-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative rounded-lg overflow-hidden bg-primary/10">
+                <div className="relative rounded-lg overflow-hidden bg-primary/10 aspect-video md:aspect-[3/1]">
                     <Image
                         src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=1692876214"
                         alt="Promotional banner for Onam"
-                        width={1200}
-                        height={400}
-                        className="object-cover w-full h-auto"
+                        fill
+                        className="object-cover"
                         data-ai-hint="festive celebration"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -68,14 +67,15 @@ export default function Home() {
   
 
   return (
-    <>
-      <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white -mx-4 sm:-mx-6 lg:-mx-8">
           <Image 
             src="https://picsum.photos/seed/hero/1600/800" 
             alt="Eco-friendly products" 
             fill={true}
             className="z-0 object-cover"
             data-ai-hint="community sharing"
+            priority
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
           <div className="relative z-20 text-center px-4">
@@ -88,34 +88,34 @@ export default function Home() {
 
       <PromotionalBanner />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {isLoggedIn && user && (
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-headline font-bold mb-2">Welcome back, {user.displayName}!</h2>
-            </div>
-          )}
-          
-          <h2 className="text-3xl font-headline mb-6 text-center">Recent Listings</h2>
-          {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16 bg-card rounded-lg">
-              <h2 className="text-2xl font-headline mb-4">No Products Found</h2>
-              <p className="text-muted-foreground">Try adjusting your search or filters.</p>
-            </div>
-          )}
+      
+      {isLoggedIn && user?.displayName && (
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-headline font-bold mb-2">Welcome back, {user.displayName}!</h2>
+        </div>
+      )}
+      
+      <h2 className="text-3xl font-headline mb-6 text-center">Recent Listings</h2>
+      {products.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 bg-card rounded-lg">
+          <h2 className="text-2xl font-headline mb-4">No Products Found</h2>
+          <p className="text-muted-foreground">Try adjusting your search or filters.</p>
+        </div>
+      )}
 
-          <Suspense fallback={<div>Loading recommendations...</div>}>
-            <RecommendedProducts />
-          </Suspense>
-      </div>
+      <Suspense fallback={<div>Loading recommendations...</div>}>
+        <RecommendedProducts />
+      </Suspense>
+      
 
-      <section id="about" className="py-16 bg-secondary/50 mt-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section id="about" className="py-16 bg-secondary/50 mt-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto text-center">
             <h2 className="text-3xl font-headline font-bold mb-4">About EcoSwap</h2>
             <p className="max-w-3xl mx-auto text-muted-foreground">
                 EcoSwap is a community-driven marketplace dedicated to promoting sustainability through the buying, selling, and swapping of pre-loved goods. Our mission is to reduce waste, extend the life of products, and build a community that values conscious consumption. Join us in making a positive impact, one swap at a time.
@@ -124,7 +124,7 @@ export default function Home() {
       </section>
 
       <section id="contact" className="py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="container mx-auto text-center">
               <h2 className="text-3xl font-headline font-bold mb-4">Get In Touch</h2>
               <p className="max-w-xl mx-auto text-muted-foreground mb-8">
                   Have questions, feedback, or just want to say hello? We'd love to hear from you.
@@ -145,6 +145,6 @@ export default function Home() {
           <Plus className="h-8 w-8" />
         </Button>
       </Link>
-    </>
+    </div>
   );
 }

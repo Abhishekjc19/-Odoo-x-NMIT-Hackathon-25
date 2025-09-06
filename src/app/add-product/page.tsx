@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,7 @@ export default function AddProductPage() {
   });
 
   const watchedImageUrl = form.watch("imageUrl");
-  const isImageUrlValid = form.formState.isValid && !form.formState.errors.imageUrl;
+  const isImageUrlValid = !form.formState.errors.imageUrl && form.formState.dirtyFields.imageUrl;
 
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function AddProductPage() {
 
 
   async function handleEnhanceImage() {
-    if (!watchedImageUrl) return;
+    if (!watchedImageUrl || !isImageUrlValid) return;
     setIsEnhancing(true);
     setEnhancedImageUrl('');
     const result = await enhanceImageAction(watchedImageUrl);
@@ -95,7 +95,7 @@ export default function AddProductPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
       <Button variant="ghost" onClick={() => router.back()} className="mb-4"><ArrowLeft className="mr-2 h-4 w-4" /> Back</Button>
       <Card>
         <CardHeader>
@@ -127,7 +127,6 @@ export default function AddProductPage() {
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger><SelectValue placeholder="Select a category" /></SelectTrigger>
-
                                     </FormControl>
                                     <SelectContent>
                                         {categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
@@ -154,7 +153,7 @@ export default function AddProductPage() {
                             </FormItem>
                         )} />
                         <div className="grid grid-cols-2 gap-4 h-48">
-                            {isImageUrlValid ? <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div> : <div />}
+                            {isImageUrlValid ? <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={watchedImageUrl} alt="Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div> : <div className="bg-muted rounded-md flex items-center justify-center text-sm text-muted-foreground">Image preview</div>}
                             {enhancedImageUrl && <div className="bg-muted rounded-md p-2 flex items-center justify-center"><Image src={enhancedImageUrl} alt="Enhanced Preview" width={200} height={200} className="object-contain max-h-full rounded-md" /></div>}
                             {isEnhancing && <div className="bg-muted rounded-md p-2 flex items-center justify-center animate-pulse">Enhancing...</div>}
                         </div>

@@ -27,8 +27,16 @@ export default function AccountPage() {
     resolver: zodResolver(profileSchema),
     values: {
         displayName: user?.displayName || '',
-    }
+    },
   });
+
+  // This will update the form values if the user data loads after the form has been initialized
+  useEffect(() => {
+    if (user) {
+      form.reset({ displayName: user.displayName });
+    }
+  }, [user, form]);
+
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -46,7 +54,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
       <h1 className="text-4xl font-headline mb-8">Account</h1>
       <Card>
         <CardHeader>
