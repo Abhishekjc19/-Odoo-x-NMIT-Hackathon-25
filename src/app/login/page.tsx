@@ -46,7 +46,7 @@ export default function LoginPage() {
         title: "Login Successful",
         description: `A confirmation email has been sent to ${values.email}.`,
       });
-      router.push("/account");
+      router.push("/");
     } else {
       toast({
         variant: "destructive",
