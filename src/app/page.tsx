@@ -69,6 +69,9 @@ function HomePageContent() {
 function PageSkeleton() {
     return (
         <div className="space-y-12 mt-12">
+             <div className="text-center mb-12 mt-12">
+                <Skeleton className="h-8 w-1/2 mx-auto" />
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
                 {Array.from({ length: 8 }).map((_, i) => (
                     <div key={i} className="space-y-3">
@@ -144,4 +147,3 @@ export default function Home() {
     </div>
   );
 }
-
