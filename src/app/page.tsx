@@ -35,12 +35,13 @@ function PromotionalBanner() {
     return (
         <section className="mb-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative rounded-lg overflow-hidden bg-primary/10 aspect-video md:aspect-[3/1]">
+                <div className="relative rounded-lg overflow-hidden bg-primary/10">
                     <Image
                         src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=1692876214"
                         alt="Promotional banner for Onam"
-                        fill
-                        className="object-cover"
+                        width={1200}
+                        height={400}
+                        className="object-cover w-full h-auto"
                         data-ai-hint="festive celebration"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
