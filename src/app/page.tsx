@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ProductFilters } from '@/components/product-filters';
@@ -24,6 +25,33 @@ function SearchBarSection() {
                         <ProductFilters categories={categories} />
                     </CardContent>
                 </Card>
+            </div>
+        </section>
+    );
+}
+
+function PromotionalBanner() {
+    return (
+        <section className="mb-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="relative rounded-lg overflow-hidden bg-primary/10">
+                    <Image
+                        src="https://picsum.photos/seed/onam/1200/400"
+                        alt="Promotional banner for Onam"
+                        width={1200}
+                        height={400}
+                        className="w-full h-auto object-cover"
+                        data-ai-hint="festive celebration"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-0 left-0 p-8 text-white">
+                        <h2 className="text-3xl md:text-4xl font-headline font-bold mb-2">Pass It On-am!</h2>
+                        <p className="text-lg mb-4 max-w-xl">Celebrate sustainability this festive season. Find unique pre-loved treasures.</p>
+                        <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                            <Link href="#">Shop the Collection</Link>
+                        </Button>
+                    </div>
+                </div>
             </div>
         </section>
     );
@@ -57,6 +85,8 @@ export default function Home() {
       </section>
 
       <SearchBarSection />
+
+      <PromotionalBanner />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {isLoggedIn && user && (
@@ -96,3 +126,4 @@ export default function Home() {
     </>
   );
 }
+
