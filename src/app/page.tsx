@@ -61,7 +61,7 @@ function HomePageContent() {
         </div>
       )}
 
-      <Suspense fallback={<div>Loading recommendations...</div>}>
+      <Suspense fallback={<PageSkeleton />}>
         <RecommendedProducts />
       </Suspense>
     </>
