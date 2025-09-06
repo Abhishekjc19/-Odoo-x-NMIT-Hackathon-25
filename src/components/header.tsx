@@ -45,16 +45,16 @@ function SearchBar() {
     };
     
     return (
-        <form onSubmit={handleSearch} className="relative w-full max-w-md">
+        <form onSubmit={handleSearch} className="relative w-full max-w-lg">
             <Input
                 type="search"
                 placeholder="Search for items..."
-                className="pr-10 bg-black/20 focus:bg-black/30 border-0"
+                className="h-12 text-md pl-6 pr-14 bg-white/5 border-white/10 focus:bg-white/10"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
-            <Button type="submit" size="icon" variant="ghost" className="absolute top-0 right-0 h-full">
-                <Search className="h-4 w-4" />
+            <Button type="submit" size="icon" variant="ghost" className="absolute top-0 right-0 h-full w-14">
+                <Search className="h-6 w-6" />
             </Button>
         </form>
     );
@@ -88,12 +88,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/50 backdrop-blur-lg">
-      <div className="container flex h-16 items-center justify-between gap-4">
+      <div className="container flex h-20 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Logo />
         </div>
         
-        <div className="hidden md:flex flex-1 justify-center">
+        <div className="hidden md:flex flex-1 justify-center px-8">
             <SearchBar />
         </div>
 
