@@ -95,7 +95,11 @@ export function getProducts({ search, category }: { search?: string; category?: 
   let filteredProducts = products;
 
   if (search) {
-    filteredProducts = filteredProducts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
+    const lowercasedSearch = search.toLowerCase();
+    filteredProducts = filteredProducts.filter(p => 
+        p.title.toLowerCase().includes(lowercasedSearch) ||
+        p.category.toLowerCase().includes(lowercasedSearch)
+    );
   }
 
   if (category && category !== 'All') {
