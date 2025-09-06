@@ -70,8 +70,8 @@ export function Header() {
       {isLoggedIn ? (
         <>
           <NavLink href="/my-listings">My Listings</NavLink>
-          <NavLink href="/account">Account</NavLink>
           <NavLink href="/purchases">Purchases</NavLink>
+          <NavLink href="/account">Account</NavLink>
         </>
       ) : (
         <>
@@ -148,8 +148,8 @@ export function Header() {
                   {isLoggedIn ? (
                     <>
                       <Link href="/my-listings" onClick={() => setSheetOpen(false)}>My Listings</Link>
-                      <Link href="/account" onClick={() => setSheetOpen(false)}>Account</Link>
                       <Link href="/purchases" onClick={() => setSheetOpen(false)}>Purchases</Link>
+                      <Link href="/account" onClick={() => setSheetOpen(false)}>Account</Link>
                       <Button onClick={() => { logout(); setSheetOpen(false); }} variant="outline">Logout</Button>
                     </>
                   ) : (
