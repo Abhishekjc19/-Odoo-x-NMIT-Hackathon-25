@@ -1,3 +1,5 @@
+"use client";
+
 import { ProductFilters } from '@/components/product-filters';
 import { ProductCard } from '@/components/product-card';
 import { getProducts, getCategories } from '@/lib/data';
@@ -7,12 +9,14 @@ import { Plus } from 'lucide-react';
 import { RecommendedProducts } from '@/components/recommended-products';
 import { Suspense } from 'react';
 import type { Product } from '@/lib/types';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function Home({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
+  const { isLoggedIn, user } = useAuth();
   const searchQuery = typeof searchParams?.search === 'string' ? searchParams.search : undefined;
   const categoryQuery = (typeof searchParams?.category === 'string' ? searchParams.category : 'All') as Product['category'] | 'All';
   
@@ -22,7 +26,11 @@ export default function Home({
   return (
     <>
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-headline font-bold mb-4">Discover Sustainable Finds</h1>
+        {isLoggedIn && user ? (
+          <h1 className="text-4xl md:text-5xl font-headline font-bold mb-4">Welcome back, {user.displayName}!</h1>
+        ) : (
+          <h1 className="text-4xl md:text-5xl font-headline font-bold mb-4">Discover Sustainable Finds</h1>
+        )}
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Your marketplace for pre-loved treasures. Join our community and embrace the circular economy.</p>
       </div>
       
