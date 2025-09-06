@@ -29,24 +29,6 @@ export async function enhanceProductImage(input: EnhanceProductImageInput): Prom
   return enhanceProductImageFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'enhanceProductImagePrompt',
-  input: {schema: EnhanceProductImageInputSchema},
-  output: {schema: EnhanceProductImageOutputSchema},
-  prompt: [
-    {
-      media: {url: '{{photoDataUri}}'},
-    },
-    {
-      text: 'Generate an enhanced version of this product photo with better lighting and clarity.',
-    },
-  ],
-  model: 'googleai/gemini-2.5-flash-image-preview',
-  config: {
-    responseModalities: ['TEXT', 'IMAGE'], // MUST provide both TEXT and IMAGE, IMAGE only won't work
-  },
-});
-
 const enhanceProductImageFlow = ai.defineFlow(
   {
     name: 'enhanceProductImageFlow',
@@ -54,7 +36,19 @@ const enhanceProductImageFlow = ai.defineFlow(
     outputSchema: EnhanceProductImageOutputSchema,
   },
   async input => {
-    const {media} = await prompt(input);
-    return {enhancedPhotoDataUri: media.url!};
+    const {media} = await ai.generate({
+      model: 'googleai/gemini-2.5-flash-image-preview',
+      prompt: [
+        {media: {url: input.photoDataUri}},
+        {text: 'Generate an enhanced version of this product photo with better lighting and clarity.'},
+      ],
+      config: {
+        responseModalities: ['TEXT', 'IMAGE'], // MUST provide both TEXT and IMAGE, IMAGE only won't work
+      },
+    });
+    if (!media.url) {
+      throw new Error('Image enhancement failed to return a data URI.');
+    }
+    return {enhancedPhotoDataUri: media.url};
   }
 );
