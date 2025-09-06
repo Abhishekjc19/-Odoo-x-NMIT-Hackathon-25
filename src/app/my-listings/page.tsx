@@ -25,13 +25,13 @@ export default function MyListingsPage() {
   }, [isLoggedIn, isLoading, router]);
 
   useEffect(() => {
-    if (user) {
+    if (user?.email) {
       setMyProducts(getProductsByUserId(user.email)); // Mock: using email as ID
     }
   }, [user]);
 
   const handleDelete = (productId: string) => {
-    if (!user) return;
+    if (!user?.email) return;
     const success = deleteProductData(productId, user.email);
     if (success) {
         setMyProducts(prev => prev.filter(p => p.id !== productId));

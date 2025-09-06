@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -24,6 +24,10 @@ const formSchema = z.object({
   displayName: z.string().min(3, { message: "Display name must be at least 3 characters." }),
   email: z.string().email({ message: "Invalid email address." }),
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),
+  confirmPassword: z.string()
+}).refine(data => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
 });
 
 export default function SignupPage() {
@@ -37,6 +41,7 @@ export default function SignupPage() {
       displayName: "",
       email: "",
       password: "",
+      confirmPassword: ""
     },
   });
 
@@ -46,7 +51,7 @@ export default function SignupPage() {
     if (result.success) {
       toast({
         title: "Account Created",
-        description: "Welcome to EcoSwap!",
+        description: "Welcome to EcoSwap! You are now logged in.",
       });
       router.push("/");
     } else {
@@ -61,12 +66,13 @@ export default function SignupPage() {
   return (
     <div className="flex items-center justify-center py-12">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-3xl font-headline text-center">Create an Account</CardTitle>
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl font-headline">Create an Account</CardTitle>
+          <CardDescription>Join the EcoSwap community today!</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="displayName"
@@ -99,6 +105,19 @@ export default function SignupPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
                       <Input type="password" placeholder="••••••••" {...field} />
                     </FormControl>

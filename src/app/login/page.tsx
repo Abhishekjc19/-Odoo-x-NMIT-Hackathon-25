@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -44,7 +44,7 @@ export default function LoginPage() {
     if (result.success) {
       toast({
         title: "Login Successful",
-        description: `A confirmation email has been sent to ${values.email}.`,
+        description: `Welcome back! A confirmation email has been sent to ${values.email}.`,
       });
       router.push("/");
     } else {
@@ -59,8 +59,9 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center py-12">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-3xl font-headline text-center">Welcome Back</CardTitle>
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl font-headline">Welcome Back</CardTitle>
+          <CardDescription>Enter your credentials to access your account.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>

@@ -54,7 +54,7 @@ export default function ProductDetailPage() {
           <Badge variant="secondary" className="w-fit mb-2">{product.category}</Badge>
           <h1 className="text-3xl md:text-4xl font-headline font-bold">{product.title}</h1>
           <p className="text-3xl font-bold text-primary my-4">${product.price.toFixed(2)}</p>
-          <div className="prose prose-invert max-w-none text-muted-foreground mb-6">
+          <div className="prose text-muted-foreground mb-6">
             <p>{product.description}</p>
           </div>
           <div className="mt-auto">

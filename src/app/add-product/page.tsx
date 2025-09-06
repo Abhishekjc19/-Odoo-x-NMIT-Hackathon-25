@@ -70,7 +70,7 @@ export default function AddProductPage() {
 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!user) return;
+    if (!user?.email) return;
     
     addProduct({
         ...values,

@@ -1,13 +1,24 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext, createContext } from 'react';
 import { useRouter } from 'next/navigation';
 
 export type User = {
   displayName: string;
   email: string;
 };
+
+interface AuthContextType {
+    isLoggedIn: boolean;
+    user: User | null;
+    isLoading: boolean;
+    login: (email: string, password?: string) => { success: boolean, message: string };
+    logout: () => void;
+    signup: (displayName: string, email: string, password: string) => { success: boolean, message: string };
+    updateUser: (updatedUserData: Partial<User>) => void;
+}
+
 
 // This is a mock user store. In a real app, this would be a database.
 const FAKE_USER_DB_KEY = 'ecoswap_users';
@@ -16,6 +27,7 @@ const FAKE_USER_DB_KEY = 'ecoswap_users';
 const mockHash = (password: string) => `hashed_${password}`;
 
 const getMockUsers = (): Map<string, any> => {
+  if (typeof window === 'undefined') return new Map();
   try {
     const usersJson = localStorage.getItem(FAKE_USER_DB_KEY);
     return usersJson ? new Map(JSON.parse(usersJson)) : new Map();
@@ -32,7 +44,9 @@ const saveMockUsers = (users: Map<string, any>) => {
   }
 };
 
-export function useAuth() {
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -93,7 +107,6 @@ export function useAuth() {
       return { success: false, message: 'Invalid password.' };
     }
     
-    // In a real app, you'd get this from the successful login response
     const userDataForState: User = { displayName: userToLogin.displayName, email: userToLogin.email };
 
     localStorage.setItem('ecoswap_token', 'fake-jwt-token');
@@ -121,5 +134,19 @@ export function useAuth() {
     }
   }, [user]);
 
-  return { isLoggedIn, user, login, logout, isLoading, updateUser, signup };
+  const value = { isLoggedIn, user, login, logout, isLoading, updateUser, signup };
+
+  return (
+    <AuthContext.Provider value={value}>
+        {children}
+    </AuthContext.Provider>
+  )
 }
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
