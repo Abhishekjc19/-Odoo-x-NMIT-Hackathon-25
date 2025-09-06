@@ -10,15 +10,13 @@ import { RecommendedProducts } from '@/components/recommended-products';
 import { Suspense } from 'react';
 import type { Product } from '@/lib/types';
 import { useAuth } from '@/hooks/use-auth';
+import { useSearchParams } from 'next/navigation';
 
-export default function Home({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+export default function Home() {
   const { isLoggedIn, user } = useAuth();
-  const searchQuery = typeof searchParams?.search === 'string' ? searchParams.search : undefined;
-  const categoryQuery = (typeof searchParams?.category === 'string' ? searchParams.category : 'All') as Product['category'] | 'All';
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search') || undefined;
+  const categoryQuery = (searchParams.get('category') || 'All') as Product['category'] | 'All';
   
   const products = getProducts({ search: searchQuery, category: categoryQuery });
   const categories = getCategories();
