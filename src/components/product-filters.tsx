@@ -34,7 +34,7 @@ export function ProductFilters({ categories }: { categories: Array<Product['cate
     } else {
         params.delete('search');
     }
-    router.push(`/?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
 };
 
   return (
