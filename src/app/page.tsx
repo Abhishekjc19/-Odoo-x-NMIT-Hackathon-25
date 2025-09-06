@@ -37,7 +37,7 @@ function PromotionalBanner() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="relative rounded-lg overflow-hidden bg-primary/10">
                     <Image
-                        src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=16928762 पास it onam desktop view"
+                        src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=16928762"
                         alt="Promotional banner for Onam"
                         width={1200}
                         height={400}
@@ -74,8 +74,7 @@ export default function Home() {
             src="https://picsum.photos/seed/hero/1600/800" 
             alt="Eco-friendly products" 
             fill={true}
-            objectFit="cover" 
-            className="z-0"
+            className="z-0 object-cover"
             data-ai-hint="community sharing"
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
