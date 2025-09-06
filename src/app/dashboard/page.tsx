@@ -46,7 +46,7 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-4xl font-headline mb-8">Dashboard</h1>
+      <h1 className="text-4xl font-headline mb-8">Account</h1>
       <Card>
         <CardHeader>
           <CardTitle>Your Profile</CardTitle>
