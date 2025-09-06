@@ -6,7 +6,7 @@ EcoSwap is a modern, full-stack web application that provides a platform for use
 
 ## ✨ Key Features
 
-- **User Authentication**: Secure sign-up and login functionality using mock local storage.
+- **User Authentication**: Secure sign-up and login functionality.
 - **Product Listings**: Users can create, edit, and delete their product listings.
 - **Advanced Search & Filtering**: Easily find products with text search and category filters.
 - **AI-Powered Image Enhancement**: Automatically improve the quality of product photos upon upload.
@@ -24,17 +24,17 @@ This project is built with a modern, production-ready tech stack:
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [ShadCN/UI](https://ui.shadcn.com/)
 - **Generative AI**: [Google's Gemini via Genkit](https://firebase.google.com/docs/genkit)
-- **Database**: Mock data (in-memory) & Browser `localStorage`
+- **Database**: Designed for use with **MongoDB**, **MySQL**, or **PostgreSQL**. (See Data Persistence section)
 - **Deployment**: [Vercel](https://vercel.com/) / [Firebase App Hosting](https://firebase.google.com/docs/app-hosting)
 
 ## 🗂️ Data Persistence
 
-For rapid prototyping, this application uses a mock data strategy instead of a traditional database.
+For rapid prototyping, this application currently uses a **mock data strategy**. This is a temporary setup for development and demonstration.
 
--   **Product Information**: All products are stored in an in-memory array located in `src/lib/data.ts`. This data resets every time the server restarts.
--   **User Authentication**: User accounts and sessions are simulated using the browser's `localStorage`. This allows for a persistent logged-in state on a per-user basis without a backend database.
+-   **Product & User Data**: Stored in in-memory arrays (`src/lib/data.ts`) and browser `localStorage` (`src/hooks/use-auth.tsx`). This data resets when the server restarts or on different browsers.
+-   **Production Database**: The application is designed to be connected to a production database like **MongoDB (Atlas)**, **MySQL**, or **PostgreSQL**. To move to production, the functions in `src/lib/data.ts` and `src/hooks/use-auth.tsx` would need to be updated to interact with the chosen database.
 
-This setup is ideal for development and demonstrating frontend features, but would need to be replaced with a proper database solution (like Firebase Firestore, Supabase, or a traditional SQL/NoSQL database) for a production application.
+This setup is ideal for demonstrating frontend features, but must be replaced with a proper database solution for a production application.
 
 ## 🚀 Getting Started
 
@@ -58,9 +58,10 @@ You need to have [Node.js](https://nodejs.org/) (version 18 or later) and npm in
     ```
 
 3.  **Set up environment variables:**
-    Create a `.env` file in the root of your project and add any necessary API keys (e.g., for Google AI).
+    Create a `.env` file in the root of your project and add any necessary API keys (e.g., for Google AI and your database connection string).
     ```
     GEMINI_API_KEY=YOUR_API_KEY_HERE
+    DATABASE_URL="your_database_connection_string"
     ```
 
 ### Running the Application
