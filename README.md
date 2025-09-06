@@ -24,17 +24,63 @@ This project is built with a modern, production-ready tech stack:
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [ShadCN/UI](https://ui.shadcn.com/)
 - **Generative AI**: [Google's Gemini via Genkit](https://firebase.google.com/docs/genkit)
-- **Database**: Designed for use with **MongoDB**, **MySQL**, or **PostgreSQL**. (See Data Persistence section)
+- **Database**: Designed for use with **MongoDB**, **MySQL**, or **PostgreSQL**. (See Database Schema section)
 - **Deployment**: [Vercel](https://vercel.com/) / [Firebase App Hosting](https://firebase.google.com/docs/app-hosting)
 
-## 🗂️ Data Persistence
+## 🗂️ Database Schema
 
-For rapid prototyping, this application currently uses a **mock data strategy**. This is a temporary setup for development and demonstration.
+The application is designed to run on a relational database like MySQL or PostgreSQL. The schema is organized into five main tables: `User`, `Project`, `Task`, `ProjectMember`, and `Message`.
 
--   **Product & User Data**: Stored in in-memory arrays (`src/lib/data.ts`) and browser `localStorage` (`src/hooks/use-auth.tsx`). This data resets when the server restarts or on different browsers.
--   **Production Database**: The application is designed to be connected to a production database like **MongoDB (Atlas)**, **MySQL**, or **PostgreSQL**. To move to production, the functions in `src/lib/data.ts` and `src/hooks/use-auth.tsx` would need to be updated to interact with the chosen database.
 
-This setup is ideal for demonstrating frontend features, but must be replaced with a proper database solution for a production application.
+
+### Table Descriptions
+
+#### 1. `User`
+Stores information about the users of the platform.
+-   `id` (INT, Primary Key): Unique identifier for each user.
+-   `name` (VARCHAR): The user's full name.
+-   `email` (VARCHAR): The user's email address, used for login.
+-   `password_hash` (VARCHAR): Hashed password for security.
+-   `role` (VARCHAR): User role (e.g., 'admin', 'member').
+-   `created_at` (DATETIME): Timestamp of when the user account was created.
+
+#### 2. `Project`
+Stores information about each project.
+-   `id` (INT, Primary Key): Unique identifier for each project.
+-   `name` (VARCHAR): The name of the project.
+-   `description` (TEXT): A detailed description of the project.
+-   `owner_id` (INT, Foreign Key): References `User.id` to indicate the project owner.
+-   `created_at` (DATETIME): Timestamp of when the project was created.
+
+#### 3. `Task`
+Stores individual tasks within a project.
+-   `id` (INT, Primary Key): Unique identifier for each task.
+-   `project_id` (INT, Foreign Key): References `Project.id` to link the task to a project.
+-   `title` (VARCHAR): The title of the task.
+-   `description` (TEXT): A detailed description of the task.
+-   `assignee_id` (INT, Foreign Key): References `User.id` of the user assigned to the task.
+-   `due_date` (DATETIME): The date when the task is due.
+-   `status` (VARCHAR): The current status of the task (e.g., 'To Do', 'In Progress', 'Done').
+-   `priority` (VARCHAR): The priority of the task (e.g., 'Low', 'Medium', 'High').
+-   `created_at` (DATETIME): Timestamp of when the task was created.
+
+#### 4. `ProjectMember`
+A join table that links users to projects, defining their role within that project.
+-   `id` (INT, Primary Key): Unique identifier for the membership record.
+-   `project_id` (INT, Foreign Key): References `Project.id`.
+-   `user_id` (INT, Foreign Key): References `User.id`.
+-   `role` (VARCHAR): The user's role specifically within this project (e.g., 'Editor', 'Viewer').
+-   `created_at` (DATETIME): Timestamp of when the user was added to the project.
+
+#### 5. `Message`
+Stores messages or comments related to a project.
+-   `id` (INT, Primary Key): Unique identifier for each message.
+-   `project_id` (INT, Foreign Key): References `Project.id`.
+-   `user_id` (INT, Foreign Key): References `User.id` of the message sender.
+-   `content` (TEXT): The text content of the message.
+-   `parent_id` (INT, Foreign Key): References `Message.id` for threaded conversations.
+-   `created_at` (DATETIME): Timestamp of when the message was posted.
+
 
 ## 🚀 Getting Started
 
