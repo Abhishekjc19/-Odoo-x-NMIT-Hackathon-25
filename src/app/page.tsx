@@ -14,6 +14,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function SearchBarSection() {
     const categories = getCategories();
@@ -30,35 +31,16 @@ function SearchBarSection() {
     );
 }
 
-export default function Home() {
+function HomePageContent() {
   const { isLoggedIn, user } = useAuth();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search') || undefined;
   const categoryQuery = (searchParams.get('category') || 'All') as Product['category'] | 'All';
   
   const products = getProducts({ search: searchQuery, category: categoryQuery });
-  
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white -mx-4 sm:-mx-6 lg:-mx-8">
-          <Image 
-            src="https://picsum.photos/seed/hero/1600/800" 
-            alt="Eco-friendly products" 
-            fill={true}
-            className="z-0 object-cover"
-            data-ai-hint="community sharing"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/50 z-10" />
-          <div className="relative z-20 text-center px-4">
-              <h1 className="text-4xl md:text-6xl font-headline font-bold mb-4">Trade, Don't Trash</h1>
-              <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">Join the movement. Buy, sell, and swap pre-loved goods with a like-minded community.</p>
-          </div>
-      </section>
-
-      <SearchBarSection />
-      
+    <>
       {isLoggedIn && user?.displayName && (
         <div className="text-center mb-12 mt-12">
           <h2 className="text-3xl font-headline font-bold mb-2">Welcome back, {user.displayName}!</h2>
@@ -81,6 +63,55 @@ export default function Home() {
 
       <Suspense fallback={<div>Loading recommendations...</div>}>
         <RecommendedProducts />
+      </Suspense>
+    </>
+  );
+}
+
+function PageSkeleton() {
+    return (
+        <div className="space-y-12">
+            <div className="text-center mb-12 mt-12">
+                <Skeleton className="h-8 w-64 mx-auto mb-2" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
+                {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="space-y-3">
+                        <Skeleton className="h-[200px] w-full rounded-xl" />
+                        <div className="space-y-2">
+                            <Skeleton className="h-4 w-4/5" />
+                            <Skeleton className="h-4 w-2/5" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+export default function Home() {
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white -mx-4 sm:-mx-6 lg:-mx-8">
+          <Image 
+            src="https://picsum.photos/seed/hero/1600/800" 
+            alt="Eco-friendly products" 
+            fill={true}
+            className="z-0 object-cover"
+            data-ai-hint="community sharing"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/50 z-10" />
+          <div className="relative z-20 text-center px-4">
+              <h1 className="text-4xl md:text-6xl font-headline font-bold mb-4">Trade, Don't Trash</h1>
+              <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">Join the movement. Buy, sell, and swap pre-loved goods with a like-minded community.</p>
+          </div>
+      </section>
+
+      <SearchBarSection />
+      
+      <Suspense fallback={<PageSkeleton />}>
+        <HomePageContent />
       </Suspense>
       
 
