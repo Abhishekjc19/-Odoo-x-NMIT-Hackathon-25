@@ -12,14 +12,15 @@ import { Menu, Search, ShoppingCart, LogOut } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { cn } from '@/lib/utils';
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+const NavLink = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
   return (
-    <Link href={href}>
+    <Link href={href} onClick={onClick}>
       <span className={cn(
         "text-sm font-medium transition-colors hover:text-primary",
-        isActive ? "text-primary" : "text-muted-foreground"
+        isActive ? "text-primary" : "text-muted-foreground",
+        "block p-2 rounded-md hover:bg-muted md:p-0 md:hover:bg-transparent"
       )}>
         {children}
       </span>
@@ -61,11 +62,13 @@ function SearchBar() {
 }
 
 export function Header() {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, user } = useAuth();
   const { cart } = useCart();
   const [isSheetOpen, setSheetOpen] = useState(false);
 
-  const navLinks = (
+  const closeSheet = () => setSheetOpen(false);
+
+  const desktopNavLinks = (
     <>
       {isLoggedIn ? (
         <>
@@ -86,6 +89,33 @@ export function Header() {
     </>
   );
 
+  const mobileNavLinks = (
+     <nav className="flex flex-col gap-4 p-4">
+        {isLoggedIn ? (
+        <>
+            <div className="p-2">
+                <p className="font-bold">{user?.displayName}</p>
+                <p className="text-sm text-muted-foreground">{user?.email}</p>
+            </div>
+            <NavLink href="/my-listings" onClick={closeSheet}>My Listings</NavLink>
+            <NavLink href="/purchases" onClick={closeSheet}>Purchases</NavLink>
+            <NavLink href="/account" onClick={closeSheet}>Account</NavLink>
+            <Button onClick={() => { logout(); closeSheet(); }} variant="outline">Logout</Button>
+        </>
+        ) : (
+        <>
+            <Link href="/login" onClick={closeSheet}>
+            <Button variant="outline" className="w-full">Login</Button>
+            </Link>
+            <Link href="/signup" onClick={closeSheet}>
+            <Button className="w-full bg-accent text-accent-foreground">Sign Up</Button>
+            </Link>
+        </>
+        )}
+    </nav>
+  );
+
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/50 backdrop-blur-lg">
       <div className="container flex h-20 items-center justify-between gap-4">
@@ -98,7 +128,7 @@ export function Header() {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          {navLinks}
+          {desktopNavLinks}
            {isLoggedIn && (
             <>
                 <Link href="/cart">
@@ -111,7 +141,7 @@ export function Header() {
                         )}
                     </Button>
                 </Link>
-                <Button onClick={logout} variant="ghost" size="icon">
+                <Button onClick={logout} variant="ghost" size="icon" aria-label="Log out">
                     <LogOut className="h-5 w-5" />
                 </Button>
             </>
@@ -120,7 +150,7 @@ export function Header() {
 
         <div className="md:hidden flex items-center">
           <Link href="/cart">
-              <Button variant="ghost" size="icon" className="relative mr-2">
+              <Button variant="ghost" size="icon" className="relative mr-2" aria-label="View Cart">
                   <ShoppingCart className="h-5 w-5" />
                   {cart.length > 0 && (
                       <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-accent-foreground text-xs">
@@ -136,33 +166,15 @@ export function Header() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background/80 backdrop-blur-xl">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background/80 backdrop-blur-xl p-0">
               <div className="flex flex-col h-full">
-                <div className="p-4">
+                <div className="p-4 border-b">
                   <Logo />
                 </div>
                 <div className="p-4">
                     <SearchBar />
                 </div>
-                <nav className="flex flex-col gap-4 p-4">
-                  {isLoggedIn ? (
-                    <>
-                      <Link href="/my-listings" onClick={() => setSheetOpen(false)}>My Listings</Link>
-                      <Link href="/purchases" onClick={() => setSheetOpen(false)}>Purchases</Link>
-                      <Link href="/account" onClick={() => setSheetOpen(false)}>Account</Link>
-                      <Button onClick={() => { logout(); setSheetOpen(false); }} variant="outline">Logout</Button>
-                    </>
-                  ) : (
-                    <>
-                      <Link href="/login" onClick={() => setSheetOpen(false)}>
-                        <Button variant="outline" className="w-full">Login</Button>
-                      </Link>
-                      <Link href="/signup" onClick={() => setSheetOpen(false)}>
-                        <Button className="w-full bg-accent text-accent-foreground">Sign Up</Button>
-                      </Link>
-                    </>
-                  )}
-                </nav>
+                {mobileNavLinks}
               </div>
             </SheetContent>
           </Sheet>
