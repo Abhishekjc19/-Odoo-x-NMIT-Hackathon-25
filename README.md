@@ -31,7 +31,60 @@ This project is built with a modern, production-ready tech stack:
 
 The application is designed to run on a relational database like MySQL or PostgreSQL. The schema is organized into five main tables: `User`, `Project`, `Task`, `ProjectMember`, and `Message`.
 
+### Entity Relationship Diagram
+```mermaid
+erDiagram
+    USER {
+        INT id PK
+        VARCHAR name
+        VARCHAR email
+        VARCHAR password_hash
+        VARCHAR role
+        DATETIME created_at
+    }
+    PROJECT {
+        INT id PK
+        VARCHAR name
+        TEXT description
+        INT owner_id FK
+        DATETIME created_at
+    }
+    TASK {
+        INT id PK
+        INT project_id FK
+        VARCHAR title
+        TEXT description
+        INT assignee_id FK
+        DATETIME due_date
+        VARCHAR status
+        VARCHAR priority
+        DATETIME created_at
+    }
+    ProjectMember {
+        INT id PK
+        INT project_id FK
+        INT user_id FK
+        VARCHAR role
+        DATETIME created_at
+    }
+    MESSAGE {
+        INT id PK
+        INT project_id FK
+        INT user_id FK
+        TEXT content
+        INT parent_id FK
+        DATETIME created_at
+    }
 
+    USER ||--o{ PROJECT : "Owns"
+    USER ||--o{ TASK : "Assigned to"
+    USER ||--o{ ProjectMember : "has"
+    USER ||--o{ MESSAGE : "sends"
+    PROJECT ||--|{ TASK : "contains"
+    PROJECT ||--|{ ProjectMember : "has"
+    PROJECT ||--o{ MESSAGE : "has"
+    MESSAGE ||--o{ MESSAGE : "is reply to"
+```
 
 ### Table Descriptions
 
