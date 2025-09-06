@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -38,19 +39,19 @@ export default function LoginPage() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Mock login logic
-    if (values.email === "test@example.com") {
-      login({ displayName: "Test User", email: values.email });
+    const result = login(values.email, values.password);
+
+    if (result.success) {
       toast({
         title: "Login Successful",
-        description: "Welcome back!",
+        description: `A confirmation email has been sent to ${values.email}.`,
       });
       router.push("/");
     } else {
       toast({
         variant: "destructive",
         title: "Login Failed",
-        description: "Invalid email or password. Please try again.",
+        description: result.message,
       });
     }
   }

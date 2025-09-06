@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -26,7 +27,7 @@ const formSchema = z.object({
 });
 
 export default function SignupPage() {
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -40,13 +41,21 @@ export default function SignupPage() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Mock signup logic
-    login({ displayName: values.displayName, email: values.email });
-    toast({
-      title: "Account Created",
-      description: "Welcome to EcoSwap!",
-    });
-    router.push("/");
+    const result = signup(values.displayName, values.email, values.password);
+
+    if (result.success) {
+      toast({
+        title: "Account Created",
+        description: "Welcome to EcoSwap!",
+      });
+      router.push("/");
+    } else {
+        toast({
+            variant: "destructive",
+            title: "Signup Failed",
+            description: result.message,
+        });
+    }
   }
 
   return (
