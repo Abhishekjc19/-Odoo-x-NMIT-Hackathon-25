@@ -3,25 +3,18 @@ import { cn } from '@/lib/utils';
 
 const EcoSwapLogoIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 256 256"
+        {...props}
     >
-      <path d="M7.5 19.5h9a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-9a3 3 0 0 0-3 3v7.5a3 3 0 0 0 3 3Z" fill="#166534" />
-      <path d="M14.5 9a2.5 2.5 0 0 0-5 0" stroke="#166534" fill="none" />
-      <path
-        d="M12.2 11.5c-2 .5-3.5 2.5-3.5 4.5 0 1.5.5 2.5 1.5 3.5"
-        stroke="#4ade80"
-        strokeWidth="1.5"
-      />
-      <path d="M14.5 18.5a5 5 0 0 0-4-7.5" stroke="#4ade80" strokeWidth="1.5" />
+        <path fill="#4F46E5" d="M224 56v144a16 16 0 0 1-16 16H48a16 16 0 0 1-16-16V56a16 16 0 0 1 16-16h160a16 16 0 0 1 16 16" />
+        <path fill="#C7D2FE" d="M96 216V40h64v176z" />
+        <path fill="#4F46E5" d="M160 40h-8v176h8a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16" />
+        <path fill="#A5B4FC" d="M128 40h-4v176h4z" />
+        <path fill="none" stroke="#A5B4FC" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16" d="M160 88a32 32 0 0 1-64 0" />
     </svg>
-  );
+);
+
 
 export function Logo({ className }: { className?: string }) {
   return (
