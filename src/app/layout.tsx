@@ -5,6 +5,7 @@ import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/context/cart-context';
 import { AuthProvider } from '@/hooks/use-auth';
+import { Chatbot } from '@/components/chatbot';
 
 export const metadata: Metadata = {
   title: 'EcoSwap',
@@ -28,12 +29,13 @@ export default function RootLayout({
           <CartProvider>
             <div className="flex flex-col min-h-screen">
               <Header />
-              <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <main className="flex-grow">
                 {children}
               </main>
               <Footer />
             </div>
             <Toaster />
+            <Chatbot />
           </CartProvider>
         </AuthProvider>
       </body>

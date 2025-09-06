@@ -48,7 +48,7 @@ function PromotionalBanner() {
                         <h2 className="text-3xl md:text-4xl font-headline font-bold mb-2">Pass It On-am!</h2>
                         <p className="text-lg mb-4 max-w-xl">Celebrate sustainability this festive season. Find unique pre-loved treasures.</p>
                         <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                            <Link href="#">Shop the Collection</Link>
+                            <Link href="/collections/pass-it-onam">Shop the Collection</Link>
                         </Button>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white -mt-8">
+      <section className="relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white">
           <Image 
             src="https://picsum.photos/seed/hero/1600/800" 
             alt="Eco-friendly products" 
@@ -115,7 +115,7 @@ export default function Home() {
 
           <Link href="/add-product" passHref>
             <Button
-              className="fixed bottom-8 right-8 h-16 w-16 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground"
+              className="fixed bottom-24 right-4 h-16 w-16 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground"
               size="icon"
               aria-label="Add new product"
             >
@@ -126,4 +126,5 @@ export default function Home() {
     </>
   );
 }
+
 
