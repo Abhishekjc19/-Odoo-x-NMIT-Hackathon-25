@@ -61,9 +61,7 @@ function HomePageContent() {
         </div>
       )}
 
-      <Suspense fallback={<PageSkeleton />}>
-        <RecommendedProducts />
-      </Suspense>
+      <RecommendedProducts />
     </>
   );
 }
@@ -84,6 +82,20 @@ function PageSkeleton() {
                         </div>
                     </div>
                 ))}
+            </div>
+             <div className="mt-16">
+                <Skeleton className="h-8 w-72 mx-auto mb-6" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="space-y-3">
+                    <Skeleton className="h-[200px] w-full rounded-xl" />
+                    <div className="space-y-2">
+                        <Skeleton className="h-4 w-4/5" />
+                        <Skeleton className="h-4 w-2/5" />
+                    </div>
+                    </div>
+                ))}
+                </div>
             </div>
         </div>
     )
@@ -108,9 +120,8 @@ export default function Home() {
           </div>
       </section>
 
-      <SearchBarSection />
-      
       <Suspense fallback={<PageSkeleton />}>
+        <SearchBarSection />
         <HomePageContent />
       </Suspense>
       
