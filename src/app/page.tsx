@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { ProductFilters } from '@/components/product-filters';
@@ -26,24 +25,6 @@ function SearchBarSection() {
                         <ProductFilters categories={categories} />
                     </CardContent>
                 </Card>
-            </div>
-        </section>
-    );
-}
-
-function PromotionalBanner() {
-    return (
-        <section className="mb-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative rounded-lg overflow-hidden bg-primary/10 aspect-video md:aspect-[3/1]">
-                    <Image
-                        src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=1692876214"
-                        alt="Promotional banner for Onam"
-                        fill
-                        className="object-cover"
-                        data-ai-hint="festive celebration"
-                    />
-                </div>
             </div>
         </section>
     );
@@ -77,12 +58,9 @@ export default function Home() {
       </section>
 
       <SearchBarSection />
-
-      <PromotionalBanner />
-
       
       {isLoggedIn && user?.displayName && (
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 mt-12">
           <h2 className="text-3xl font-headline font-bold mb-2">Welcome back, {user.displayName}!</h2>
         </div>
       )}
