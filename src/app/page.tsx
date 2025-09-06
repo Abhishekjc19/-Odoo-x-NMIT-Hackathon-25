@@ -37,7 +37,7 @@ function PromotionalBanner() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="relative rounded-lg overflow-hidden bg-primary/10">
                     <Image
-                        src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=16928762"
+                        src="https://www.rewago.in/cdn/shop/collections/pass_it_on_onam_desktop_view.jpg?v=1692876214"
                         alt="Promotional banner for Onam"
                         width={1200}
                         height={400}
